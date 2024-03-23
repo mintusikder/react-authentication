@@ -24,9 +24,9 @@ const Register = () => {
         <div>
             <h3>Register</h3>
             <form onSubmit={handelSubmit}>
-                <input onChange={handelEmailChange} type="email" name="email" id="email" placeholder="Your Email"/> <br />
-                <input onBlur={handelPasswordBlur} type="password" name="password" id="password" placeholder="Your Password"/> <br />
-                <input type="submit" value="Register"/>
+                <input className="w-50 mb-4 rounded ps-2" onChange={handelEmailChange} type="email" name="email" id="email" placeholder="Your Email"/> <br />
+                <input className="w-50 mb-4 rounded ps-2" onBlur={handelPasswordBlur} type="password" name="password" id="password" placeholder="Your Password"/> <br />
+                <input className="btn btn-primary" type="submit" value="Register"/>
             </form>
         </div>
     );
