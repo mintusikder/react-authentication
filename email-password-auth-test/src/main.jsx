@@ -10,6 +10,7 @@ import Home from './assets/component/Home';
 import Layout from './assets/component/Layout';
 import Login from './assets/component/Login.jsx';
 import Regiter from './assets/component/Regiter';
+import GoogleAndGitHub from './assets/component/GoogleAndGitHub.jsx';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path:"/register",
         element:<Regiter></Regiter>,
+      },
+      {
+        path:"/google",
+        element:<GoogleAndGitHub></GoogleAndGitHub>,
       },
     ]
   },
