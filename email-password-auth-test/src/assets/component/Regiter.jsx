@@ -6,11 +6,18 @@ import { useState } from "react";
 const Regiter = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState(" ");
-  const [showPassword, setShowPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("");
   const auth = getAuth(app);
   const handelRejester = (event) => {
     event.preventDefault();
+
+    if(/(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test()){
+            console.log("oK")
+    }else{
+        console.log("Not Ok")
+    }
+
     if ((email, password)) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
