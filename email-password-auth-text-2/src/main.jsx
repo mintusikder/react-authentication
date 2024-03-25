@@ -10,6 +10,7 @@ import Main from './assets/component/Main.jsx';
 import Home from './assets/component/Home.jsx';
 import Login from './assets/component/Login.jsx';
 import Register from './assets/component/Register.jsx';
+import RehesterRbs from './assets/component/RehesterRbs.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +23,14 @@ const router = createBrowserRouter([
       {
           path:"/login",
           element: <Login></Login>
+      },
+      {
+          path:"/register",
+          element: <Register></Register>
+      },
+      {
+          path:"/registerrbs",
+          element: <RehesterRbs></RehesterRbs>
       },
       {
           path:"/register",
