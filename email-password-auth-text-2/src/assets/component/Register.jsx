@@ -7,6 +7,7 @@ const Register = () => {
   const auth = getAuth(app);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassoed] = useState(false)
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -63,6 +64,10 @@ const Register = () => {
       });
   };
 
+ const handelShowPassword = () =>{
+  setShowPassoed(!showPassword)
+ }
+
   return (
     <div>
       <h2>Register</h2>
@@ -82,11 +87,14 @@ const Register = () => {
         />
         <br /><br />
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           id="password"
           name="password"
           placeholder="Enter your password"
         />
+        <button type="button" onClick={handelShowPassword}>
+          {showPassword? "Hide":"Show" } Password
+        </button>
         <br /><br />
         <input type="submit" value="Register" />
       </form>
