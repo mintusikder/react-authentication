@@ -1,44 +1,98 @@
 import React, { useState } from "react";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
+import app from "./firebase/firebasez.config";
+import { Link } from "react-router-dom";
 
 const Register = () => {
-  const [email, setEmail] = useState("");
+  const auth = getAuth(app);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState("");
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    console.log(e.target.email.value); 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setError('');
+    setSuccess("");
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    const name = event.target.name.value;
+
+    // Regex pattern to check if the password contains at least one letter
+    const containsLetter = /(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/.test(password);
+
+    if (!containsLetter) {
+      setError("Password must contain at least one letter");
+      return;
+    }
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        setError('');
+        event.target.reset();
+        setSuccess("Registration successful");
+        sendVerificationEmail(user);
+        updateUserData(user, name);
+      })
+      .catch(error => {
+        setError(error.message);
+        setSuccess("");
+      });
   };
 
-  const handleEmail = (e) => {
-    console.log(e.target.value);
-    setEmail(e.target.value);
+  const sendVerificationEmail = (user) => {
+    sendEmailVerification(user)
+      .then(result => {
+        console.log(result);
+        alert("Please verify your email");
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
-  const handlePasswordBlur = (e) => {
-    console.log(e.target);
+  const updateUserData = (user, name) => {
+    updateProfile(user, {
+      displayName: name
+    })
+      .then(() => {
+        console.log("User name updated");
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
     <div>
-      <h2>This is register</h2>
-      <form onSubmit={handleRegister}>
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
         <input
-          onChange={handleEmail}
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Enter your name"
+        />
+        <br /><br />
+        <input
           type="email"
           id="email"
           name="email"
-          placeholder="Enter Your email"
+          placeholder="Enter your email"
         />
-        <br />
+        <br /><br />
         <input
-          onBlur={handlePasswordBlur}
           type="password"
           id="password"
           name="password"
-          placeholder="Enter Your password"
+          placeholder="Enter your password"
         />
-        <br />
+        <br /><br />
         <input type="submit" value="Register" />
       </form>
+      <p><small>Already have an account? <Link to='/login'>Login</Link></small></p>
+      {error && <p className="text-danger">{error}</p>}
+      {success && <p className="text-success">{success}</p>}
     </div>
   );
 };
